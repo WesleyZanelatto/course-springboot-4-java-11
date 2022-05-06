@@ -2,14 +2,22 @@ package com.devsuperior.course.entities_models;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /*5º passo: Serializable utilizado quando queremos que objetos sejam transformados em cadeias de bytes. Ex: para que o objeto trafegue na rede,
  *  possa ser gravado em arquivo.
  */
 
+@Entity //Essa anotação foi habilitada pelo JPA
 public class User implements Serializable{ 
 	private static final long serialVersionUID = 1L;
 
 //1º passo: Criar os atributos da Entidade/Tabela
+@Id // Indicando para essa entidade que esse campo é a chave primaria
+@GeneratedValue(strategy = GenerationType.IDENTITY)//gera valor automático para o id
 private Long id;
 
 private String name;
