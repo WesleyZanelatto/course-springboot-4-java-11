@@ -17,12 +17,12 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 	
-	//Repassa a chamada para o repository.findAll
+	//Busca todos Usuarios, repassando a chamada para o repository.findAll
 	public List<User> findAll(){
 		return repository.findAll();
 	}
 	
-	//Vai recuperar um usuario pelo id
+	//Busca o Usuario pelo id
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
 		return obj.get();//get() vai retornar o tipo de obj que esta no Optional, nesse caso User

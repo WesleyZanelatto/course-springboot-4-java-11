@@ -1,17 +1,24 @@
 package com.devsuperior.course.entities_models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /*5º passo: Serializable utilizado quando queremos que objetos sejam transformados em cadeias de bytes. Ex: para que o objeto trafegue na rede,
  *  possa ser gravado em arquivo.
  */
 
 @Entity //Essa anotação foi habilitada pelo JPA
+@Table(name = "tb_user")
 public class User implements Serializable{ 
 	private static final long serialVersionUID = 1L;
 
@@ -27,6 +34,10 @@ private String email;
 private String phone;
 
 private String password;
+
+//As collections precisam sempre serem instanciadas e criar apenas o Getters e "nunca" Setters
+@OneToMany(mappedBy = "client") // Para criar o relacionamento de um para muito, ou seja, de Users(1) para Order(*)
+private List<Order> orders = new ArrayList<>(); //Criando associações entre as tabelas User(1) com a Tabela Order(*), nesse caso 1 Usuario tem varios pedidos
 
 //2º passo: Criar os Métodos especiais Construtores
 public User() {
@@ -84,6 +95,10 @@ public void setPassword(String password) {
 	this.password = password;
 }
 
+public List<Order> getOrders() {
+	return orders;
+}
+
 //4º passo: Criar o HashCode e Equals. Utilizado para comparar dois objetos, nesse caso vamos utilizar apenas id
 
 @Override
@@ -110,6 +125,8 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+
+
 
 
 
