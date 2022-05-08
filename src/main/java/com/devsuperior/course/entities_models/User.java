@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*5º passo: Serializable utilizado quando queremos que objetos sejam transformados em cadeias de bytes. Ex: para que o objeto trafegue na rede,
  *  possa ser gravado em arquivo.
@@ -36,6 +36,7 @@ private String phone;
 private String password;
 
 //As collections precisam sempre serem instanciadas e criar apenas o Getters e "nunca" Setters
+@JsonIgnore // Para evitar que fique buscando a mesma coisa repetidamente por causa da mão dupla de @OneToMany e @ManyToOne
 @OneToMany(mappedBy = "client") // Para criar o relacionamento de um para muito, ou seja, de Users(1) para Order(*)
 private List<Order> orders = new ArrayList<>(); //Criando associações entre as tabelas User(1) com a Tabela Order(*), nesse caso 1 Usuario tem varios pedidos
 
