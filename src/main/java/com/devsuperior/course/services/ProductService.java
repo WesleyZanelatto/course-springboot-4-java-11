@@ -14,13 +14,13 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
-	public List<Product> findAll(){
+
+	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
-	
+
 	public Product findById(Long id) {
-		Optional<Product> obj=productRepository.findById(id);
+		Optional<Product> obj = productRepository.findById(id);
 		return obj.get();
 	}
 }

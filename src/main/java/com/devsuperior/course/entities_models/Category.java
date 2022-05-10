@@ -1,17 +1,15 @@
 package com.devsuperior.course.entities_models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_category")
@@ -22,11 +20,11 @@ public class Category implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	/*
-	@JsonIgnore 
-	@OneToMany(mappedBy = "categories") 
-	private List<Product> products = new ArrayList<>(); 	
-	*/
+	
+	@Transient // Vai impedir que o JPA tente interpretar esse atributo
+	private Set<Product> products = new HashSet<>(); /*Quando se trata de uma coleção gerar apenas o Get, pois nunca queremos 
+	trocar a coleção e sim apenas adicionar ou romover elementos dessa coleção*/
+	
 	public Category() {
 		
 	}
@@ -51,12 +49,12 @@ public class Category implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	/*
-	public List<Product> getProducts() {
+	
+	public Set<Product> getProducts() {
 		return products;
 	}
-*/
-	
+
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,7 +79,6 @@ public class Category implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
+		
 }

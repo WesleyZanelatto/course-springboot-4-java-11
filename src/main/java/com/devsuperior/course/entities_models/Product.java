@@ -1,14 +1,15 @@
 package com.devsuperior.course.entities_models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -22,22 +23,24 @@ public class Product implements Serializable{
 	private String description;
 	private Double price;
 	private String imgUrl;
-	/*
-	@ManyToOne 
-	@JoinColumn(name = "produto_id")
-	private Category product;
-	*/
+	
+	
+	@Transient // Vai impedir que o JPA tente interpretar esse atributo
+	private Set<Category> categories = new HashSet<>(); /*Set esta garantindo que o mesmo produto não possa ter uma mesma categoria mais de uma 
+	vez. Esta sendo instanciada para garantir que a coleção não comece nula, pois ela deve começar vazia. Set é uma interface e por isso
+	utilizamos uma classe que representa es interface que nesse caso é o HashSet. Da mesma forma quando utilizamos o List e depois o
+	ArrayList*/
+	
 	public Product() {
-		
 	}
-
+	
+	//A coleção não esta entrando no construtor, pois ja esta sendo instanciado na linha 26
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
-		
 	}
 
 	public Long getId() {
@@ -79,16 +82,11 @@ public class Product implements Serializable{
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-/*
-	public Category getProduct() {
-		return product;
+
+	public Set<Category> getCategories() {
+		return categories;
 	}
 
-	public void setProduct(Category product) {
-		this.product = product;
-	}
-	*/
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -113,7 +111,5 @@ public class Product implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+				
 }
