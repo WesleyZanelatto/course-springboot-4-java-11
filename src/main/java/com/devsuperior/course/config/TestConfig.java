@@ -55,6 +55,18 @@ public class TestConfig implements CommandLineRunner {
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
+		//Fazendo associações entre os objetos
+		p1.getCategories().add(cat2);//Adicionando o produto p1 na categoria cat2 
+		p2.getCategories().add(cat1);//Adicionando o produto p2 na categoria cat1 
+		p2.getCategories().add(cat3);//Adicionando o produto p2 na categoria cat3 
+		p3.getCategories().add(cat3);//Adicionando o produto p3 na categoria cat3 
+		p4.getCategories().add(cat3);//Adicionando o produto p4 na categoria cat3 
+		p5.getCategories().add(cat2);//Adicionando o produto p5 na categoria cat2 
+		
+		//Salvando os produtos com as associações entre os objetos linhas 58 à 64
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		
 		// Construtor da classe User
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");

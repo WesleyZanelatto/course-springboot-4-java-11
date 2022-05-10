@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_product")
@@ -25,7 +29,9 @@ public class Product implements Serializable{
 	private String imgUrl;
 	
 	
-	@Transient // Vai impedir que o JPA tente interpretar esse atributo
+	//@Transient // Vai impedir que o JPA tente interpretar esse atributo
+	@ManyToMany 
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))//"tb_product_category" vai ser o nome da tabela no BD. "product_id" o nome da chave estrangeira
 	private Set<Category> categories = new HashSet<>(); /*Set esta garantindo que o mesmo produto não possa ter uma mesma categoria mais de uma 
 	vez. Esta sendo instanciada para garantir que a coleção não comece nula, pois ela deve começar vazia. Set é uma interface e por isso
 	utilizamos uma classe que representa es interface que nesse caso é o HashSet. Da mesma forma quando utilizamos o List e depois o
